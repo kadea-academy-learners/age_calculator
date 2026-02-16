@@ -1,0 +1,135 @@
+name: Autograding Tests
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: test_01_birth_2000
+        id: test_01_birth_2000
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_01_birth_2000
+          command: python -m pytest -q test_01_birth_2000.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_02_birth_1990
+        id: test_02_birth_1990
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_02_birth_1990
+          command: python -m pytest -q test_02_birth_1990.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_03_birth_2010
+        id: test_03_birth_2010
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_03_birth_2010
+          command: python -m pytest -q test_03_birth_2010.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_04_birth_1985
+        id: test_04_birth_1985
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_04_birth_1985
+          command: python -m pytest -q test_04_birth_1985.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_05_birth_1975
+        id: test_05_birth_1975
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_05_birth_1975
+          command: python -m pytest -q test_05_birth_1975.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_06_birth_2005
+        id: test_06_birth_2005
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_06_birth_2005
+          command: python -m pytest -q test_06_birth_2005.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_07_birth_1960
+        id: test_07_birth_1960
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_07_birth_1960
+          command: python -m pytest -q test_07_birth_1960.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_08_birth_2001
+        id: test_08_birth_2001
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_08_birth_2001
+          command: python -m pytest -q test_08_birth_2001.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_09_birth_1999
+        id: test_09_birth_1999
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_09_birth_1999
+          command: python -m pytest -q test_09_birth_1999.py
+          timeout: 10
+          max-score: 1
+
+      - name: test_10_birth_1950
+        id: test_10_birth_1950
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_10_birth_1950
+          command: python -m pytest -q test_10_birth_1950.py
+          timeout: 10
+          max-score: 1
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          TEST_01_BIRTH_2000_RESULTS: "${{ steps.test_01_birth_2000.outputs.result }}"
+          TEST_02_BIRTH_1990_RESULTS: "${{ steps.test_02_birth_1990.outputs.result }}"
+          TEST_03_BIRTH_2010_RESULTS: "${{ steps.test_03_birth_2010.outputs.result }}"
+          TEST_04_BIRTH_1985_RESULTS: "${{ steps.test_04_birth_1985.outputs.result }}"
+          TEST_05_BIRTH_1975_RESULTS: "${{ steps.test_05_birth_1975.outputs.result }}"
+          TEST_06_BIRTH_2005_RESULTS: "${{ steps.test_06_birth_2005.outputs.result }}"
+          TEST_07_BIRTH_1960_RESULTS: "${{ steps.test_07_birth_1960.outputs.result }}"
+          TEST_08_BIRTH_2001_RESULTS: "${{ steps.test_08_birth_2001.outputs.result }}"
+          TEST_09_BIRTH_1999_RESULTS: "${{ steps.test_09_birth_1999.outputs.result }}"
+          TEST_10_BIRTH_1950_RESULTS: "${{ steps.test_10_birth_1950.outputs.result }}"
+        with:
+          runners: test_01_birth_2000,test_02_birth_1990,test_03_birth_2010,test_04_birth_1985,test_05_birth_1975,test_06_birth_2005,test_07_birth_1960,test_08_birth_2001,test_09_birth_1999,test_10_birth_1950
